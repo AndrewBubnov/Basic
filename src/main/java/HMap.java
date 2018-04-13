@@ -107,7 +107,7 @@ public class HMap<Integer, T> implements Iterable<Integer>{
         @Override
         public java.lang.Integer next() {
 
-            return (java.lang.Integer) entry.key;
+            return (java.lang.Integer) entry.key;                    //тут надо как-нибудь взять следующий ключ
         }
     }
 
