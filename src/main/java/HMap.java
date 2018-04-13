@@ -1,10 +1,8 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 
-public class HMap<Integer, T> {
+public class HMap<Integer, T> implements Iterable<Integer>{
     private int capacity = 10;
     ArrayList<ArrayList<T>> values = new ArrayList<ArrayList<T>>();
     ArrayList<ArrayList<Integer>> keys = new ArrayList<ArrayList<Integer>>();
@@ -93,9 +91,27 @@ public class HMap<Integer, T> {
         return targetKeyList(key).indexOf(key);
     }
 
+    @Override
+    public Iterator iterator() {
+        return (Iterator) new MyHMapIterator();
+    }
+    private class MyHMapIterator implements Iterator<Integer>{
 
+        private Entry entry;
 
-    private class Entry<Integer, T> implements Iterable<Integer>{
+        @Override
+        public boolean hasNext() {
+            return (java.lang.Integer)entry.key < entry.size() - 1;
+        }
+
+        @Override
+        public java.lang.Integer next() {
+
+            return (java.lang.Integer) entry.key;
+        }
+    }
+
+    private class Entry<Integer, T> {
                         private Integer key;
                         private T value;
 
@@ -107,33 +123,7 @@ public class HMap<Integer, T> {
                             return keys.size();
                         }
 
-        @Override
-        public Iterator iterator() {
-            return new MyHMapIterator();
-        }
 
-        private class MyHMapIterator implements Iterator<Integer>{
-
-            Entry entry;
-            @Override
-            public boolean hasNext() {
-            if (entry.key.equals(entry.size() - 1)){
-                return false;
-            } else return true;
-
-            }
-
-            @Override
-            public Integer next() {
-
-                return (Integer) entry.key;
-            }
-
-            @Override
-            public void remove() {
-
-            }
-        }
     }
 
 
