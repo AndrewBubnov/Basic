@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class HMap<Integer, T> implements Iterable<Integer>{
+public class HMap<Integer, T> implements Iterable<HMap.Entry<Integer, T>>{
     private int capacity = 10;
     ArrayList<ArrayList<T>> values = new ArrayList<ArrayList<T>>();
     ArrayList<ArrayList<Integer>> keys = new ArrayList<ArrayList<Integer>>();
@@ -72,17 +72,6 @@ public class HMap<Integer, T> implements Iterable<Integer>{
         return nodeList;
     }
 
-//    private ArrayList<Integer> keySet(ArrayList<String> nodeList){
-//        ArrayList<Integer> keySet = new ArrayList<>();
-//        for (String iterator : nodeList){
-//            Integer key = Integer.parseInt(iterator.split(" ")[0]);
-//            keySet.add(key);
-//        }
-//        return keySet;
-//    }
-
-
-
     private ArrayList targetKeyList(int key){
         return keys.get(hash(key));
     }
@@ -92,24 +81,48 @@ public class HMap<Integer, T> implements Iterable<Integer>{
     }
 
     @Override
-    public Iterator iterator() {
-        return (Iterator) new MyHMapIterator();
+    public Iterator<Entry<Integer, T>> iterator() {
+        return new IterEntry();
     }
-    private class MyHMapIterator implements Iterator<Integer>{
 
-        private Entry entry;
+    class IterEntry implements Iterator<Entry<Integer, T>> {
+        int mainIndex =0;
+        Iterator<Integer> itK=keys.get(mainIndex).iterator();
+        Iterator<T> itV=values.get(mainIndex).iterator();
+
+        private void updateIterators() {
+            mainIndex++;
+        }
+
+        private void shiftIndex() {
+            if (itK.hasNext()) return;
+            while (++mainIndex < keys.size()) {
+                updateIterators();
+                if (itK.hasNext()) {
+                    break;
+                }
+            }
+        }
 
         @Override
         public boolean hasNext() {
-            return (java.lang.Integer)entry.key < entry.size() - 1;
+            return mainIndex < keys.size() - 1;
         }
 
         @Override
-        public java.lang.Integer next() {
+        public Entry<Integer, T> next() {
+            Entry e = new Entry<>(itK.next(), itV.next());
+            shiftIndex();
+            return e;
+        }
 
-            return (java.lang.Integer) entry.key;                    //тут надо как-нибудь взять следующий ключ
+        @Override
+        public void remove() {
+            keys.remove(mainIndex);
+            values.remove(mainIndex);
         }
     }
+
 
     private class Entry<Integer, T> {
                         private Integer key;
@@ -122,8 +135,10 @@ public class HMap<Integer, T> implements Iterable<Integer>{
                         private int size(){
                             return keys.size();
                         }
-
-
+                        @Override
+                        public String toString() {
+                            return String.format("key:%s, value:%s",key,value);
+                        }
     }
 
 
@@ -140,11 +155,19 @@ public class HMap<Integer, T> implements Iterable<Integer>{
         hmap.put(33, 89);
         hmap.remove(2);
 
-        System.out.println(hmap.containsKey(16));
-        System.out.println(hmap.get(3));
+
+
+        //System.out.println(hmap.containsKey(16));
+        //System.out.println(hmap.get(3));
         ArrayList alist = hmap.entrySet();
-//        for (int i = 0; i < alist.size(); i++) {
-//            System.out.printf("%s ", alist.get(i));
-//        }
+
+    }
+
+    public void check(){
+        HMap hmap = new HMap();
+        Iterator<Entry<Integer, T>> it = hmap.iterator();
+        while (it.hasNext()){
+            System.out.println(it.next());
+        }
     }
 }
