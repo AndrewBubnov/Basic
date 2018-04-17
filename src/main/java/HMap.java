@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class HMap<Integer, T> implements Iterable<HMap.Entry<Integer, T>>{
+public class HMap<Integer, T>/* implements Iterable<HMap.Entry<Integer, T>>*/{
     private int capacity = 10;
     ArrayList<ArrayList<T>> values = new ArrayList<ArrayList<T>>();
     ArrayList<ArrayList<Integer>> keys = new ArrayList<ArrayList<Integer>>();
@@ -80,7 +80,7 @@ public class HMap<Integer, T> implements Iterable<HMap.Entry<Integer, T>>{
         return targetKeyList(key).indexOf(key);
     }
 
-    @Override
+    //@Override
     public Iterator<Entry<Integer, T>> iterator() {
         return new IterEntry();
     }
