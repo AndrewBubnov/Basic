@@ -9,7 +9,6 @@ public class InputOutput extends Thread{
             String string = "Andrew Bubnov - " + i + " thread\n";
             InputStream stream = new ByteArrayInputStream(string.getBytes(StandardCharsets.UTF_8));
             try (Writer writer = new FileWriter("D:\\test.txt\\", true)) {
-
                 int c = stream.read();
                 while (c != -1) {
                     writer.write(c);
