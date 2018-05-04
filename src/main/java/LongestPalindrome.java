@@ -25,6 +25,4 @@ public class LongestPalindrome {
         else System.out.println("Palindroms not found");
         System.out.println("Execution time is: " + (end - start) + " ms.");
     }
-
-
 }
