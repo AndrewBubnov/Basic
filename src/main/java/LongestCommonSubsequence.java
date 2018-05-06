@@ -1,5 +1,5 @@
 
-public class LongestCommonSubstring {
+public class LongestCommonSubsequence {
     public static void main(String[] args) {
 
         String s1 = "SHINCHAN";
