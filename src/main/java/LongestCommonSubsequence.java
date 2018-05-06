@@ -16,8 +16,7 @@ public class LongestCommonSubsequence {
         int j = s2.length();
         while (i > 0 && j > 0){
             if (s1.charAt(i - 1) == s2.charAt(j - 1)){
-                lcs[index - 1] = s1.charAt(i - 1);
-                index--;
+                lcs[--index] = s1.charAt(i - 1);
                 i--;
                 j--;
             } else if (array[i - 1][j] < array[i][j - 1]){
