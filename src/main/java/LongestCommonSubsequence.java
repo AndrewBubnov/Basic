@@ -1,7 +1,6 @@
 
 public class LongestCommonSubsequence {
     public static void main(String[] args) {
-
         String s1 = "SHINCHAN";
         String s2 = "NOHARAAA";
         int[][] array = new int[s1.length() + 1][s2.length() + 1];
