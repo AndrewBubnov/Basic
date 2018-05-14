@@ -53,7 +53,7 @@ public class WriteObject {
     }
 
     private static void serializator(Circle circle, String fileName) {
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName, true))) {
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
            oos.writeObject(circle);
         } catch (IOException e) {
             e.printStackTrace();
