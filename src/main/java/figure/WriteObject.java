@@ -42,7 +42,7 @@ public class WriteObject {
         org.w3c.dom.Document document = builder.newDocument();
         Element root = document.createElement("root");
         Element circle = document.createElement("Circle");
-        circle.setAttribute("radius", Integer.toString(obj.radius));
+        circle.setAttribute("radius", Integer.toString(obj.getRadius()));
         Text text = document.createTextNode("First XML-written object");
         document.appendChild(root);
         root.appendChild(circle);

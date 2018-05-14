@@ -5,7 +5,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Circle implements Figure, Serializable{
-    public int radius;
+
+    private int radius;
+
+    public int getRadius() {
+        return radius;
+    }
 
     public Circle() {
         this.radius = 0;
