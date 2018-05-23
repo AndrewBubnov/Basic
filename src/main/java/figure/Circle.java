@@ -1,34 +1,27 @@
 package figure;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class Circle implements Figure, Serializable{
+public class Circle extends Figure {
 
-    private int radius;
-
-    public int getRadius() {
-        return radius;
-    }
-
-    public Circle() {
-        this.radius = 0;
-    }
+    int radius;
 
     public Circle(int radius) {
         this.radius = radius;
     }
 
-    @Override
+    public int getSide() {
+        return radius;
+    }
+
     public double getArea() {
         double s = Math.PI*this.radius*this.radius;
         s = new BigDecimal(s).setScale(3, RoundingMode.UP).doubleValue();
         return s;
     }
-
-    public static void main(String[] args) {
-        Circle circle = new Circle(3);
-        System.out.println(circle.getArea());
+    @Override
+    public String toString(){
+      return "Circle radius = " + radius;
     }
 }
