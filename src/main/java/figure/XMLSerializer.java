@@ -19,8 +19,8 @@ public class XMLSerializer implements Serializer {
         } else System.out.println("Given object can not be serialized by XMLSerializator");
     }
 
-    public void printFigure(Figure figure) {
-        try (RandomAccessFile randomAccessFile = new RandomAccessFile("d:\\serialize.xml", "rw")) {
+    private void printFigure(Figure figure) {
+        try (RandomAccessFile file = new RandomAccessFile("d:\\serialize.xml", "rw")) {
 
                 StringBuilder sb = new StringBuilder();
                 String size = figure.toString().split(" ")[1];
@@ -30,21 +30,21 @@ public class XMLSerializer implements Serializer {
 
             sb.append("\n</xml>");
 
-            xmlTagRemove(randomAccessFile);
+            xmlTagRemove(file);
 
-            randomAccessFile.write(sb.toString().getBytes("UTF8"));
+            file.write(sb.toString().getBytes("UTF8"));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void printFigureListHeader(FigureList figureList) {
-        try (RandomAccessFile randomAccessFile = new RandomAccessFile("d:\\serialize.xml", "rw")) {
-            randomAccessFile.seek(randomAccessFile.length());
-            xmlTagRemove(randomAccessFile);
-            String s = "<FigureList area = " + "\"" + figureList.getArea() + "\">\n";
-            randomAccessFile.write(s.getBytes("UTF8"));
+    private void printFigureListHeader(FigureList figureList) {
+        try (RandomAccessFile file = new RandomAccessFile("d:\\serialize.xml", "rw")) {
+            file.seek(file.length());
+            xmlTagRemove(file);
+            String s = "<FigureList total area = " + "\"" + figureList.getArea() + "\">\n";
+            file.write(s.getBytes("UTF8"));
             printFigureList(figureList, 0);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -53,11 +53,11 @@ public class XMLSerializer implements Serializer {
         }
     }
 
-    public void printFigureListFooter() {
-        try (RandomAccessFile randomAccessFile = new RandomAccessFile("d:\\serialize.xml", "rw")) {
-            randomAccessFile.seek(randomAccessFile.length());
-            xmlTagRemove(randomAccessFile);
-            randomAccessFile.write("</FigureList>\n</xml>".getBytes("UTF8"));
+    private void printFigureListFooter() {
+        try (RandomAccessFile file = new RandomAccessFile("d:\\serialize.xml", "rw")) {
+            file.seek(file.length());
+            xmlTagRemove(file);
+            file.write("</FigureList>\n</xml>".getBytes("UTF8"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -65,7 +65,7 @@ public class XMLSerializer implements Serializer {
         }
     }
 
-    public void printFigureList(FigureList figureList, int index){
+    private void printFigureList(FigureList figureList, int index){
         if (index == figureList.getFigureList().size()){
             printFigureListFooter();
             return;
@@ -74,23 +74,23 @@ public class XMLSerializer implements Serializer {
             printFigureList(figureList, index + 1);
         }
 
-    private RandomAccessFile xmlTagRemove(RandomAccessFile randomAccessFile){
+    private RandomAccessFile xmlTagRemove(RandomAccessFile file){
         try {
-            randomAccessFile.seek(randomAccessFile.length() - 6);
-            int data = randomAccessFile.read();
+            file.seek(file.length() - 6);
+            int data = file.read();
             String s = "";
             while (data != -1){
                 s += (char)data;
-                data = randomAccessFile.read();
+                data = file.read();
             }
             if (s.equals("</xml>")) {
-                randomAccessFile.seek(randomAccessFile.length() - 7);
-                randomAccessFile.write("\n".getBytes());
+                file.seek(file.length() - 7);
+                file.write("\n".getBytes());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return randomAccessFile;
+        return file;
     }
 
     public static void createNewFile() {
