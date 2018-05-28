@@ -38,10 +38,9 @@ public class FiveDigitsPalindrome {
 
 
     private static boolean isSimpleImproved(long number) {
-        long i;
         boolean f = true;
         int finish = (int)Math.sqrt(number);
-            for (i = 3; i <= finish; i = i + 2) {
+            for (long i = 3; i <= finish; i = i + 2) {
                 if ((number / i) * i == number) {
                     f = false;
                     break;
