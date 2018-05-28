@@ -39,12 +39,14 @@ public class FiveDigitsPalindrome {
 
     private static boolean isSimpleImproved(long number) {
         long i;
-        int finish = (int)(number>>1) + 1;
-            for (i = 3; i < finish; i = i + 2) {
+        boolean f = true;
+        int finish = (int)Math.sqrt(number);
+            for (i = 3; i <= finish; i = i + 2) {
                 if ((number / i) * i == number) {
+                    f = false;
                     break;
                 }
             }
-        return i >= finish;
+        return f;
     }
 }
