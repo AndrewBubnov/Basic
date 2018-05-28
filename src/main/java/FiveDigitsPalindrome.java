@@ -45,6 +45,6 @@ public class FiveDigitsPalindrome {
                     break;
                 }
             }
-        return i == finish;
+        return i >= finish;
     }
 }
